@@ -1,0 +1,9 @@
+{
+  "name": "case02_undefined_variables",
+  "description": "Utilisation de variables non d\u00e9finies",
+  "expected_issues": [
+    "NameError",
+    "undefined variable"
+  ],
+  "difficulty": "easy"
+}

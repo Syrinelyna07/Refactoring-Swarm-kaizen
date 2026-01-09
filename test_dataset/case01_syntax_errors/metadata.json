@@ -1,0 +1,10 @@
+{
+  "name": "case01_syntax_errors",
+  "description": "Code avec erreurs de syntaxe basiques",
+  "expected_issues": [
+    "SyntaxError",
+    "missing colon",
+    "missing parenthesis"
+  ],
+  "difficulty": "medium"
+}

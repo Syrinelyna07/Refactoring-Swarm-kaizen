@@ -1,0 +1,10 @@
+{
+  "name": "case03_import_errors",
+  "description": "Imports manquants ou incorrects",
+  "expected_issues": [
+    "ImportError",
+    "ModuleNotFoundError",
+    "NameError"
+  ],
+  "difficulty": "medium"
+}

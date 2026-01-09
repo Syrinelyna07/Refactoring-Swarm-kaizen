@@ -1,0 +1,10 @@
+{
+  "name": "case06_no_documentation",
+  "description": "Code sans documentation ni tests",
+  "expected_issues": [
+    "missing docstring",
+    "no tests",
+    "undocumented"
+  ],
+  "difficulty": "medium"
+}
