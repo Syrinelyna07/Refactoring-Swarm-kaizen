@@ -7,7 +7,6 @@ from src.tools.file_tools import read_file, write_file
 from src.tools.sandbox_guard import is_path_allowed
 from src.utils.logger import log_experiment, ActionType
 import os
-from langchain_google_genai import ChatGoogleGenerativeAI
 
 def load_system_prompt():
     """Load the fixer system prompt"""
@@ -32,7 +31,7 @@ def run_fixer(plan: dict, target_dir: str, test_results: dict = None) -> dict:
         status="SUCCESS"
     )
     
-    llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-exp", temperature=0)
+    llm = ChatAnthropic(model="claude-sonnet-4-20250514", temperature=0)
     system_prompt = load_system_prompt()
     
     files_fixed = []

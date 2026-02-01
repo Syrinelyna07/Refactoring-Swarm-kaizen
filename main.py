@@ -13,14 +13,14 @@ def main():
     args = parser.parse_args()
 
     if not os.path.exists(args.target_dir):
-        print(f"❌ Dossier {args.target_dir} introuvable.")
+        print(f"ERROR: Dossier {args.target_dir} introuvable.")
         sys.exit(1)
 
-    print(f"🚀 DEMARRAGE SUR : {args.target_dir}")
+    print(f"DEMARRAGE SUR : {args.target_dir}")
     log_experiment(
         agent_name="System",
         model_used="system",
-        action=ActionType.ANALYSIS,  # Using existing action
+        action=ActionType.ANALYSIS,
         details={
             "input_prompt": f"Starting refactoring on {args.target_dir}",
             "output_response": "System initialized successfully",
@@ -34,19 +34,20 @@ def main():
         final_state = run_refactoring_swarm(args.target_dir)
         
         # Print results
-        print(f"\n📊 RESULTATS:")
+        print(f"\nRESULTATS:")
         print(f"   Iterations: {final_state['iteration']}")
         print(f"   Status: {final_state['status']}")
         
         if final_state.get('test_result'):
             test_result = final_state['test_result']
-            print(f"   Tests: {'✅ PASSED' if test_result.get('tests_passed') else '❌ FAILED'}")
+            status_icon = "PASSED" if test_result.get('tests_passed') else "FAILED"
+            print(f"   Tests: {status_icon}")
             print(f"   Quality Score: {test_result.get('quality_score', 0):.2f}/10")
         
         if final_state['status'] == 'complete':
-            print("\n✅ MISSION_COMPLETE")
+            print("\nMISSION_COMPLETE")
         else:
-            print(f"\n⚠️ MISSION_INCOMPLETE: {final_state['status']}")
+            print(f"\nMISSION_INCOMPLETE: {final_state['status']}")
             
     except Exception as e:
         log_experiment(
@@ -60,7 +61,7 @@ def main():
             },
             status="ERROR"
         )
-        print(f"❌ ERREUR: {e}")
+        print(f"ERREUR: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":
