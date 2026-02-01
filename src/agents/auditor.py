@@ -1,7 +1,7 @@
 """
 The Auditor Agent - Analyzes code and creates refactoring plan
 """
-from langchain_anthropic import ChatAnthropic
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, SystemMessage
 from src.tools.pylint_tool import run_pylint_directory
 from src.utils.logger import log_experiment, ActionType
@@ -20,7 +20,7 @@ def run_auditor(target_dir: str) -> dict:
     """
     log_experiment(
         agent_name="Auditor",
-        model_used="claude-sonnet-4-20250514",
+        model_used="gemini-2.0-flash-exp",  # Changed from claude
         action=ActionType.ANALYSIS,
         details={
             "input_prompt": f"Analyzing {target_dir}",
@@ -36,7 +36,7 @@ def run_auditor(target_dir: str) -> dict:
     if not pylint_result.get("success"):
         log_experiment(
             agent_name="Auditor",
-            model_used="claude-sonnet-4-20250514",
+            model_used="gemini-2.0-flash-exp",  # Changed from claude
             action=ActionType.ANALYSIS,
             details={
                 "input_prompt": "No files to analyze",
@@ -48,7 +48,7 @@ def run_auditor(target_dir: str) -> dict:
         return {"status": "no_files", "plan": "No Python files to analyze"}
     
     # Create refactoring plan using LLM
-    llm = ChatAnthropic(model="claude-sonnet-4-20250514", temperature=0)
+    llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-exp", temperature=0)
     system_prompt = load_system_prompt()
     
     # Build analysis summary
@@ -78,7 +78,7 @@ def run_auditor(target_dir: str) -> dict:
     
     log_experiment(
         agent_name="Auditor",
-        model_used="claude-sonnet-4-20250514",
+        model_used="gemini-2.0-flash-exp",  # Changed from claude
         action=ActionType.GENERATION,
         details={
             "input_prompt": analysis_summary,
