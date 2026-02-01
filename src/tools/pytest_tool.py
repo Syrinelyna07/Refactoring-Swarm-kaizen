@@ -1,7 +1,6 @@
 import subprocess
 from pathlib import Path
 from src.tools.sandbox_guard import is_path_allowed
-import json
 
 def run_pytest(test_dir: str) -> dict:
     """Exécute les tests avec Pytest et retourne les résultats"""
@@ -12,33 +11,44 @@ def run_pytest(test_dir: str) -> dict:
         return {"success": False, "error": "Test folder not found", "passed": 0, "failed": 0}
 
     try:
-        report_file = path / "temp_report.json"
         result = subprocess.run(
-            ["pytest", str(path), "-v", "--tb=short", "--json-report", f"--json-report-file={report_file}"],
+            ["pytest", str(path), "-v", "--tb=short"],
             capture_output=True,
             text=True,
             timeout=60
         )
 
-        test_data = None
-        if report_file.exists():
-            with open(report_file, "r") as f:
-                test_data = json.load(f)
-            report_file.unlink()
-
-        passed = failed = 0
-        for line in result.stdout.split("\n"):
+        passed = 0
+        failed = 0
+        output_lines = result.stdout.split("\n")
+        
+        for line in output_lines:
             if " passed" in line:
                 try:
-                    passed = int(line.split()[0])
-                except: pass
+                    parts = line.split()
+                    for i, part in enumerate(parts):
+                        if part == "passed":
+                            passed = int(parts[i-1])
+                except: 
+                    pass
             if " failed" in line:
                 try:
-                    failed = int(line.split()[0])
-                except: pass
+                    parts = line.split()
+                    for i, part in enumerate(parts):
+                        if part == "failed":
+                            failed = int(parts[i-1])
+                except: 
+                    pass
 
-        success = result.returncode == 0
-        return {"success": success, "passed": passed, "failed": failed, "output": result.stdout, "errors": result.stderr, "test_data": test_data}
+        success = result.returncode == 0 and failed == 0
+        return {
+            "success": success,
+            "passed": passed,
+            "failed": failed,
+            "output": result.stdout,
+            "errors": result.stderr,
+            "returncode": result.returncode
+        }
 
     except subprocess.TimeoutExpired:
         return {"success": False, "error": "Timeout", "passed": 0, "failed": 0}

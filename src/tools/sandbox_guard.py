@@ -3,7 +3,13 @@ from pathlib import Path
 ALLOWED_BASE = Path(__file__).parent.parent.parent / "sandbox"
 
 def is_path_allowed(target: str) -> bool:
-    return Path(target).resolve().is_relative_to(ALLOWED_BASE.resolve())
+    try:
+        target_path = Path(target).resolve()
+        allowed = ALLOWED_BASE.resolve()
+        # Check if target is within sandbox OR is the sandbox itself
+        return target_path == allowed or target_path.is_relative_to(allowed)
+    except (ValueError, OSError):
+        return False
 
 def validate_path(target: str, base_dir: str = None) -> bool:
     """Validates if a path is within the allowed directory"""
@@ -14,6 +20,6 @@ def validate_path(target: str, base_dir: str = None) -> bool:
     
     try:
         target_path = Path(target).resolve()
-        return target_path.is_relative_to(allowed)
+        return target_path == allowed or target_path.is_relative_to(allowed)
     except (ValueError, OSError):
         return False
