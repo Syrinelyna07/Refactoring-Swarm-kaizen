@@ -2,7 +2,7 @@ import argparse
 import sys
 import os
 from dotenv import load_dotenv
-from src.utils.logger import log_experiment
+from src.utils.logger import log_experiment, ActionType
 from src.orchestrator.graph import run_refactoring_swarm
 
 load_dotenv()
@@ -17,7 +17,17 @@ def main():
         sys.exit(1)
 
     print(f"🚀 DEMARRAGE SUR : {args.target_dir}")
-    log_experiment("System", "STARTUP", f"Target: {args.target_dir}", "INFO")
+    log_experiment(
+        agent_name="System",
+        model_used="system",
+        action=ActionType.ANALYSIS,  # Using existing action
+        details={
+            "input_prompt": f"Starting refactoring on {args.target_dir}",
+            "output_response": "System initialized successfully",
+            "target_dir": args.target_dir
+        },
+        status="SUCCESS"
+    )
     
     # Run the refactoring swarm
     try:
@@ -39,7 +49,17 @@ def main():
             print(f"\n⚠️ MISSION_INCOMPLETE: {final_state['status']}")
             
     except Exception as e:
-        log_experiment("System", "ERROR", str(e), "ERROR")
+        log_experiment(
+            agent_name="System",
+            model_used="system",
+            action=ActionType.DEBUG,
+            details={
+                "input_prompt": "System error occurred",
+                "output_response": str(e),
+                "error": str(e)
+            },
+            status="ERROR"
+        )
         print(f"❌ ERREUR: {e}")
         sys.exit(1)
 

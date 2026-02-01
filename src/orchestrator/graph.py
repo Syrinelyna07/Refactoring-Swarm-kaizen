@@ -7,7 +7,7 @@ from typing import TypedDict, Literal
 from src.agents.auditor import run_auditor
 from src.agents.fixer import run_fixer
 from src.agents.judge import run_judge
-from src.utils.logger import log_experiment
+from src.utils.logger import log_experiment, ActionType
 
 class RefactoringState(TypedDict):
     """State shared between agents"""
@@ -44,7 +44,17 @@ def judge_node(state: RefactoringState) -> RefactoringState:
         state["status"] = "complete"
     elif state["iteration"] >= MAX_ITERATIONS:
         state["status"] = "max_iterations"
-        log_experiment("Orchestrator", "MAX_ITERATIONS", f"Stopped at {MAX_ITERATIONS}", "WARNING")
+        log_experiment(
+            agent_name="Orchestrator",
+            model_used="langgraph",
+            action=ActionType.DEBUG,
+            details={
+                "input_prompt": f"Reached maximum iterations",
+                "output_response": f"Stopping at iteration {state['iteration']}",
+                "iteration": state["iteration"]
+            },
+            status="ERROR"
+        )
     else:
         state["status"] = "retry"
     
@@ -85,7 +95,17 @@ def run_refactoring_swarm(target_dir: str) -> dict:
     Main orchestration function
     Returns the final state after refactoring
     """
-    log_experiment("Orchestrator", "START", f"Target: {target_dir}", "INFO")
+    log_experiment(
+        agent_name="Orchestrator",
+        model_used="langgraph",
+        action=ActionType.ANALYSIS,
+        details={
+            "input_prompt": f"Starting refactoring workflow on {target_dir}",
+            "output_response": "Workflow initialized",
+            "target_dir": target_dir
+        },
+        status="SUCCESS"
+    )
     
     # Initialize state
     initial_state: RefactoringState = {
@@ -101,5 +121,16 @@ def run_refactoring_swarm(target_dir: str) -> dict:
     graph = create_graph()
     final_state = graph.invoke(initial_state)
     
-    log_experiment("Orchestrator", "COMPLETE", f"Status: {final_state['status']}", "SUCCESS")
+    log_experiment(
+        agent_name="Orchestrator",
+        model_used="langgraph",
+        action=ActionType.GENERATION,
+        details={
+            "input_prompt": "Refactoring workflow completed",
+            "output_response": f"Status: {final_state['status']}, Iterations: {final_state.get('iteration', 0)}",
+            "iterations": final_state.get('iteration', 0),
+            "final_status": final_state['status']
+        },
+        status="SUCCESS"
+    )
     return final_state
