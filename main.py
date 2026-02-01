@@ -3,12 +3,13 @@ import sys
 import os
 from dotenv import load_dotenv
 from src.utils.logger import log_experiment
+from src.orchestrator.graph import run_refactoring_swarm
 
 load_dotenv()
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--target_dir", type=str, required=True)
+    parser = argparse.ArgumentParser(description="The Refactoring Swarm - Automated Code Refactoring System")
+    parser.add_argument("--target_dir", type=str, required=True, help="Directory containing code to refactor")
     args = parser.parse_args()
 
     if not os.path.exists(args.target_dir):
@@ -17,7 +18,30 @@ def main():
 
     print(f"🚀 DEMARRAGE SUR : {args.target_dir}")
     log_experiment("System", "STARTUP", f"Target: {args.target_dir}", "INFO")
-    print("✅ MISSION_COMPLETE")
+    
+    # Run the refactoring swarm
+    try:
+        final_state = run_refactoring_swarm(args.target_dir)
+        
+        # Print results
+        print(f"\n📊 RESULTATS:")
+        print(f"   Iterations: {final_state['iteration']}")
+        print(f"   Status: {final_state['status']}")
+        
+        if final_state.get('test_result'):
+            test_result = final_state['test_result']
+            print(f"   Tests: {'✅ PASSED' if test_result.get('tests_passed') else '❌ FAILED'}")
+            print(f"   Quality Score: {test_result.get('quality_score', 0):.2f}/10")
+        
+        if final_state['status'] == 'complete':
+            print("\n✅ MISSION_COMPLETE")
+        else:
+            print(f"\n⚠️ MISSION_INCOMPLETE: {final_state['status']}")
+            
+    except Exception as e:
+        log_experiment("System", "ERROR", str(e), "ERROR")
+        print(f"❌ ERREUR: {e}")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
