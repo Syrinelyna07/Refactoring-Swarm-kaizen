@@ -1,0 +1,11 @@
+{
+  "name": "case05_code_quality_issues",
+  "description": "Code fonctionnel mais de mauvaise qualit\u00e9",
+  "expected_issues": [
+    "naming convention",
+    "complexity",
+    "too many locals",
+    "line too long"
+  ],
+  "difficulty": "medium"
+}

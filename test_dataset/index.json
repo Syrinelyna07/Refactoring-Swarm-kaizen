@@ -1,0 +1,53 @@
+{
+  "total_cases": 8,
+  "cases": [
+    {
+      "name": "case01_syntax_errors",
+      "description": "Code avec erreurs de syntaxe basiques",
+      "difficulty": "medium",
+      "expected_issues_count": 3
+    },
+    {
+      "name": "case02_undefined_variables",
+      "description": "Utilisation de variables non d\u00e9finies",
+      "difficulty": "easy",
+      "expected_issues_count": 2
+    },
+    {
+      "name": "case03_import_errors",
+      "description": "Imports manquants ou incorrects",
+      "difficulty": "medium",
+      "expected_issues_count": 3
+    },
+    {
+      "name": "case04_type_errors",
+      "description": "Erreurs de types et op\u00e9rations invalides",
+      "difficulty": "medium",
+      "expected_issues_count": 3
+    },
+    {
+      "name": "case05_code_quality_issues",
+      "description": "Code fonctionnel mais de mauvaise qualit\u00e9",
+      "difficulty": "medium",
+      "expected_issues_count": 4
+    },
+    {
+      "name": "case06_no_documentation",
+      "description": "Code sans documentation ni tests",
+      "difficulty": "medium",
+      "expected_issues_count": 3
+    },
+    {
+      "name": "case07_logic_errors",
+      "description": "Erreurs de logique subtiles",
+      "difficulty": "medium",
+      "expected_issues_count": 3
+    },
+    {
+      "name": "case08_security_issues",
+      "description": "Probl\u00e8mes de s\u00e9curit\u00e9 potentiels",
+      "difficulty": "medium",
+      "expected_issues_count": 4
+    }
+  ]
+}

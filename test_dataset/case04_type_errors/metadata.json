@@ -1,0 +1,10 @@
+{
+  "name": "case04_type_errors",
+  "description": "Erreurs de types et op\u00e9rations invalides",
+  "expected_issues": [
+    "TypeError",
+    "IndexError",
+    "KeyError"
+  ],
+  "difficulty": "medium"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "case07_logic_errors",
+  "description": "Erreurs de logique subtiles",
+  "expected_issues": [
+    "logic error",
+    "incorrect calculation",
+    "edge case"
+  ],
+  "difficulty": "medium"
+}
