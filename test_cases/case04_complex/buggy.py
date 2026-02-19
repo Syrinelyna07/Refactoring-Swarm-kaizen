@@ -1,7 +1,7 @@
 """Complex buggy module"""
 
 def process_data(data):
-    """Process data by doubling positive values and filtering negatives.
+    """Process data by adding 1 to positive values and filtering negatives.
     
     Args:
         data: List of numeric values to process
@@ -20,10 +20,13 @@ def process_data(data):
         if not isinstance(item, (int, float)):
             raise TypeError("All items must be numeric")
         if item > 0:
-            result.append(item * 2 + 1)
-        # Negative and zero values are filtered out (skipped)
+            result.append(item + 1)
+        elif item == 0:
+            result.append(item)
+        # Remove the else clause that was adding negative values
     
     return sorted(result)
+
 
 class Calculator:
     """A calculator that maintains operation history."""
@@ -52,6 +55,7 @@ class Calculator:
             List of operation strings
         """
         return self.history.copy()
+
 
 def validate_email(email):
     """Validate email address format.

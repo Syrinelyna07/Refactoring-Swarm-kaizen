@@ -16,6 +16,6 @@ def test_find_maximum():
     assert find_maximum([10, 20, 5]) == 20
 
 def test_is_even():
-    assert is_even(2) == True
-    assert is_even(3) == False
-    assert is_even(0) == True
+    assert is_even(2) is True
+    assert is_even(3) is False
+    assert is_even(0) is True

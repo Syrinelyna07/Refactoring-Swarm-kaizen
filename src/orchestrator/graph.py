@@ -18,7 +18,7 @@ class RefactoringState(TypedDict):
     iteration: int
     status: str
 
-MAX_ITERATIONS = 10
+MAX_ITERATIONS = 15  # Augmenté de 10 à 15 pour les cas complexes
 
 def auditor_node(state: RefactoringState) -> RefactoringState:
     """Run the auditor agent"""

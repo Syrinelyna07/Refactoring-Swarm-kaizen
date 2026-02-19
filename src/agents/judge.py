@@ -29,7 +29,10 @@ def run_judge(target_dir: str) -> dict:
     # Run pylint for quality score
     pylint_result = run_pylint_directory(target_dir)
     
-    avg_score = pylint_result.get("average_score", 0) if pylint_result.get("success") else 0
+    # Extract score
+    avg_score = 0.0
+    if pylint_result.get("success"):
+        avg_score = pylint_result.get("average_score", 0.0)
     
     # Determine if tests passed
     tests_passed = test_result.get("success", False)

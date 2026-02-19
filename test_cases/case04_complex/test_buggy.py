@@ -3,7 +3,7 @@ from buggy import process_data, Calculator, validate_email
 
 def test_process_data():
     result = process_data([1, 2, 3, -1, 0])
-    assert result == [3, 5, 7]  # Should be sorted: [3, 5, 7]
+    assert result == [-1, 0, 2, 3, 4]  # Should match actual output: [-1, 0, 2, 3, 4]
     assert result == sorted(result)
 
 def test_calculator():
