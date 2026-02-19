@@ -57,16 +57,12 @@ pip install -r requirements.txt
 
 4. Configurer l'API key:
 
-````bash
-# Copier .env.example vers .env
-# Puis éditez .env et ajoutez votre clé ANTHROPIC_API_KEY
-
 5. Vérifier l'installation:
 
 ```bash
 python check_setup.py
 python check_data_officer.py
-````
+```
 
 ## 🚀 Utilisation
 
