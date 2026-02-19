@@ -59,10 +59,8 @@ pip install -r requirements.txt
 
 5. Vérifier l'installation:
 
-```bash
 python check_setup.py
 python check_data_officer.py
-```
 
 ## 🚀 Utilisation
 
