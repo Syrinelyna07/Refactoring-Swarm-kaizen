@@ -59,8 +59,7 @@ pip install -r requirements.txt
 
 ```bash
 # Copier .env.example vers .env
-# Ajouter votre ANTHROPIC_API_KEY ou ANTHROPIC_API_KEY=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
-
+# Puis éditez .env et ajoutez votre clé ANTHROPIC_API_KEY
 ```
 
 5. Vérifier l'installation:
