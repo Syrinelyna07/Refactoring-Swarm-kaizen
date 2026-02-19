@@ -19,10 +19,10 @@ def check_environment():
         print("✅ Fichier .env détecté.")
         with open(".env", "r") as f:
             content = f.read()
-            if "GOOGLE_API_KEY" in content:
+            if "ANTHROPIC_API_KEY" in content:
                  print("✅ Clé API présente (format non vérifié).")
             else:
-                 print("❌ Aucune variable API_KEY trouvée dans .env")
+                 print("❌ Aucune variable ANTHROPIC_API_KEY trouvée dans .env")
                  all_good = False
     else:
         print("❌ Fichier .env manquant (Copiez .env.example).")
