@@ -96,7 +96,7 @@ def run_fixer(plan: dict, target_dir: str, test_results: dict = None) -> dict:
             files_fixed.append(filepath)
             log_experiment(
                 agent_name="Fixer",
-                model_used="gemini-2.0-flash-exp",
+                model_used="claude-sonnet-4-20250514",
                 action=ActionType.FIX,
                 details={
                     "input_prompt": current_code[:500],
@@ -127,7 +127,7 @@ def run_fixer(plan: dict, target_dir: str, test_results: dict = None) -> dict:
     
     log_experiment(
         agent_name="Fixer",
-        model_used="gemini-2.0-flash-exp",
+        model_used="claude-sonnet-4-20250514",
         action=ActionType.FIX,
         details={
             "input_prompt": f"Completed fixing {len(files_fixed)} files",

@@ -2,7 +2,7 @@ import argparse
 import sys
 import os
 from dotenv import load_dotenv
-from src.utils.logger import log_experiment, ActionType
+from src.utils.logger import log_experiment, ActionType, initialize_logger, finalize_logger
 from src.orchestrator.graph import run_refactoring_swarm
 
 load_dotenv()
@@ -15,6 +15,9 @@ def main():
     if not os.path.exists(args.target_dir):
         print(f"ERROR: Dossier {args.target_dir} introuvable.")
         sys.exit(1)
+
+    # Initialize logger (OBLIGATOIRE pour le protocole)
+    initialize_logger()
 
     print(f"DEMARRAGE SUR : {args.target_dir}")
     log_experiment(
@@ -62,7 +65,11 @@ def main():
             status="ERROR"
         )
         print(f"ERREUR: {e}")
+        finalize_logger()  # Sauvegarder même en cas d'erreur
         sys.exit(1)
+    
+    # Finalize logger (OBLIGATOIRE - sauvegarde sur disque)
+    finalize_logger()
 
 if __name__ == "__main__":
     main()
