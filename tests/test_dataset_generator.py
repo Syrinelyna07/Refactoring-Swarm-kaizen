@@ -3,8 +3,7 @@ Test Dataset Generator - Génère des cas de test avec du code buggé
 Responsable: Data Officer
 """
 from pathlib import Path
-from typing import List, Dict
-import shutil
+from typing import List
 
 
 class TestCase:
